@@ -6,7 +6,7 @@ function App() {
   return (
     <div class="grid grid-cols-3 gap-4">
       <SideNav />
-      <div class="col-span-2 bg-gray-400 px-4">Some Page Content</div>
+      <div class="col-span-2 bg-gray-400 px-4">Some Page Content Here</div>
     </div>
   );
 }
