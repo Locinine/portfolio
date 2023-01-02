@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import { Route, Routes } from "react-router-dom";
 
-function App() {
+import Navigation from "./components/navbar";
+import About from "./containers/about";
+import CV from "./containers/cv/cv";
+import Projects from "./containers/projects";
+
+import "./App.css";
+
+const App: React.FC = () => {
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const [isMobile, setIsMobile] = useState(false);
+
+  const handleResize = () => {
+    setWindowWidth(window.innerWidth);
+    setIsMobile(/iPhone|iPad|iPod|Android/i.test(navigator.userAgent));
+  };
+
+  useEffect(() => {
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="main_container">
+      <Navigation title="Farrah Lord-Newcombe" />
+      <Routes>
+        <Route path={"/"} element={<About />} />
+        <Route
+          path="/cv"
+          element={<CV windowWidth={windowWidth} isMobile={isMobile} />}
+        />
+        <Route path={"/projects"} element={<Projects />} />
+        <Route element={<About />} />
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
